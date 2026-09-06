@@ -3,124 +3,422 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>產業園區安全防護系統 - 快速登入</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="安防快速登入">
-  <title>安防系統快速登入</title>
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="安防登入">
   <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="icon" type="image/png" href="icon-192.png">
   <style>
-    * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    :root {
+      --primary: #00707c;
+      --primary-hover: #005a63;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --radius: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
     body {
-      margin: 0; padding: 24px 16px; background-color: #f1f5f9;
-      display: flex; flex-direction: column; align-items: center; min-height: 100vh;
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 16px;
     }
-    .card {
-      background: #ffffff; border-radius: 16px; padding: 24px;
-      width: 100%; max-width: 380px; box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+
+    .container {
+      background: var(--card-bg);
+      width: 100%;
+      max-width: 420px;
+      border-radius: var(--radius);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--border);
+      padding: 24px 20px;
     }
-    h1 { font-size: 1.25rem; color: #0f172a; margin: 0 0 16px; text-align: center; }
-    .badge {
-      display: inline-block; background: #e2e8f0; color: #475569;
-      font-size: 0.8rem; padding: 4px 10px; border-radius: 999px; margin-bottom: 20px;
+
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
     }
-    label { font-size: 0.875rem; font-weight: 600; color: #334155; margin-bottom: 6px; display: block; }
-    .system-selector {
-      display: flex; gap: 8px; margin-bottom: 18px;
+
+    .logo-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      background: #e6f4f5;
+      color: var(--primary);
+      border-radius: 50%;
+      margin-bottom: 12px;
     }
-    .radio-btn {
-      flex: 1; text-align: center; padding: 10px; border: 1.5px solid #cbd5e1;
-      border-radius: 8px; font-size: 0.9rem; cursor: pointer; color: #475569;
+
+    .logo-badge svg {
+      width: 26px;
+      height: 26px;
+      fill: currentColor;
     }
-    input[type="radio"] { display: none; }
-    input[type="radio"]:checked + .radio-btn {
-      border-color: #2563eb; background: #eff6ff; color: #1d4ed8; font-weight: 600;
+
+    .header h1 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #0f172a;
+      line-height: 1.4;
     }
-    .input-box {
-      width: 100%; padding: 12px; font-size: 1.1rem; text-align: center; letter-spacing: 4px;
-      border: 1.5px solid #cbd5e1; border-radius: 8px; margin-bottom: 18px; outline: none;
+
+    .header p {
+      font-size: 0.825rem;
+      color: var(--text-muted);
+      margin-top: 4px;
     }
-    .input-box:focus { border-color: #2563eb; ring: 2px #93c5fd; }
-    .btn-main {
-      width: 100%; padding: 14px; background: #2563eb; color: #fff;
-      border: none; border-radius: 8px; font-size: 1rem; font-weight: 600;
-      cursor: pointer; box-shadow: 0 2px 8px rgba(37,99,235,0.3);
+
+    .section-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #334155;
+      margin-bottom: 8px;
+      display: block;
     }
-    .btn-main:active { background: #1d4ed8; }
-    .btn-sub {
-      width: 100%; margin-top: 10px; padding: 10px; background: #f8fafc;
-      border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.85rem; color: #475569; cursor: pointer;
+
+    .radio-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 18px;
     }
+
+    .radio-card {
+      position: relative;
+    }
+
+    .radio-card input {
+      position: absolute;
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
+
+    .radio-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 12px 8px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      background: #fafafa;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .radio-content span.title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #334155;
+    }
+
+    .radio-content span.desc {
+      font-size: 0.725rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .radio-card input:checked + .radio-content {
+      border-color: var(--primary);
+      background: #e6f4f5;
+    }
+
+    .radio-card input:checked + .radio-content span.title {
+      color: var(--primary);
+    }
+
+    .field-group {
+      margin-bottom: 18px;
+    }
+
+    .field-desc {
+      font-size: 0.775rem;
+      color: #64748b;
+      margin-bottom: 6px;
+    }
+
+    .pin-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .pin-input {
+      width: 100%;
+      height: 48px;
+      font-size: 1.3rem;
+      text-align: center;
+      letter-spacing: 6px;
+      font-weight: 700;
+      color: #0f172a;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      outline: none;
+      transition: border-color 0.2s;
+      background: #fff;
+    }
+
+    .pin-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(0, 112, 124, 0.15);
+    }
+
+    .preview-box {
+      background: #f1f5f9;
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin-bottom: 20px;
+      font-size: 0.8rem;
+      color: #475569;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .preview-box code {
+      font-family: monospace;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #0f172a;
+    }
+
+    .btn-action {
+      width: 100%;
+      height: 48px;
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 12px rgba(0, 112, 124, 0.25);
+      transition: background-color 0.2s, transform 0.1s;
+    }
+
+    .btn-action:active {
+      background: var(--primary-hover);
+      transform: scale(0.99);
+    }
+
+    .btn-secondary {
+      width: 100%;
+      height: 40px;
+      margin-top: 10px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: #475569;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .btn-secondary:active {
+      background: #f1f5f9;
+    }
+
+    .helper-notes {
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+      font-size: 0.775rem;
+      color: #64748b;
+      line-height: 1.5;
+    }
+
+    .helper-notes ol {
+      padding-left: 18px;
+      margin-top: 4px;
+    }
+
     .toast {
-      position: fixed; bottom: 30px; background: rgba(15,23,42,0.9);
-      color: #fff; padding: 10px 18px; border-radius: 20px; font-size: 0.85rem;
-      opacity: 0; transition: opacity 0.3s; pointer-events: none;
+      position: fixed;
+      bottom: 24px;
+      background: rgba(15, 23, 42, 0.92);
+      color: #fff;
+      font-size: 0.85rem;
+      padding: 10px 18px;
+      border-radius: 20px;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.25s ease;
+      pointer-events: none;
+      z-index: 100;
     }
-    .toast.show { opacity: 1; }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1>產業園區安全防護</h1>
-    <div style="text-align: center;"><span class="badge">帳號：kksp</span></div>
+  <div class="container">
+    <div class="header">
+      <div class="logo-badge">
+        <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+      </div>
+      <h1>產業園區安全防護系統</h1>
+      <p>行動端快速登入啟動器</p>
+    </div>
 
-    <label>選擇目標主機</label>
-    <div class="system-selector">
-      <label style="flex: 1; margin: 0;">
-        <input type="radio" name="targetUrl" value="https://security.bip.gov.tw/sima/" checked>
-        <div class="radio-btn">正式系統</div>
+    <label class="section-label">選擇目標主機</label>
+    <div class="radio-group">
+      <label class="radio-card">
+        <input type="radio" name="targetHost" value="https://security.bip.gov.tw/sima/" checked>
+        <div class="radio-content">
+          <span class="title">正式系統</span>
+          <span class="desc">security.bip.gov.tw</span>
+        </div>
       </label>
-      <label style="flex: 1; margin: 0;">
-        <input type="radio" name="targetUrl" value="https://bipsimabackup.eric.org.tw/">
-        <div class="radio-btn">備援系統</div>
+      <label class="radio-card">
+        <input type="radio" name="targetHost" value="https://bipsimabackup.eric.org.tw/">
+        <div class="radio-content">
+          <span class="title">備援系統</span>
+          <span class="desc">eric.org.tw</span>
+        </div>
       </label>
     </div>
 
-    <label>輸入動態密碼 (5 位數字)</label>
-    <input type="password" id="pinInput" class="input-box" inputmode="numeric" maxlength="5" placeholder="•••••">
+    <div class="field-group">
+      <label class="section-label" for="pinInput">動態密碼 (5 碼阿拉伯數字)</label>
+      <div class="field-desc">完整格式：<code>Kspo@ + 5碼 + #</code></div>
+      <div class="pin-container">
+        <input type="password" id="pinInput" class="pin-input" inputmode="numeric" maxlength="5" placeholder="•••••" autofocus>
+      </div>
+    </div>
 
-    <button class="btn-main" onclick="executeLogin()">複製完整密碼並開啟</button>
-    <button class="btn-sub" onclick="copyAccount()">僅複製帳號 (kksp)</button>
+    <div class="preview-box">
+      <span>預覽密碼字串</span>
+      <code id="previewCode">Kspo@•••••#</code>
+    </div>
+
+    <button id="goBtn" class="btn-action" onclick="handleLoginFlow()">
+      <svg style="width:18px;height:18px;fill:currentColor" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+      複製密碼並前往登入
+    </button>
+    <button class="btn-secondary" onclick="copyAccountOnly()">僅複製帳號 (kksp)</button>
+
+    <div class="helper-notes">
+      <strong>操作提示：</strong>
+      <ol>
+        <li>點擊按鈕後自動合成密碼並拷貝至剪貼簿。</li>
+        <li>跳轉至登入頁後：帳號輸入 <code>kksp</code>，密碼欄直接「貼上」。</li>
+        <li>手動輸入圖形驗證碼即可完成登入。</li>
+      </ol>
+    </div>
   </div>
 
   <div id="toast" class="toast">已複製密碼！正在前往系統...</div>
 
   <script>
+    const pinInput = document.getElementById('pinInput');
+    const previewCode = document.getElementById('previewCode');
+    const toast = document.getElementById('toast');
+
+    // 即時動態預覽
+    pinInput.addEventListener('input', (e) => {
+      const val = e.target.value.replace(/\D/g, '').slice(0, 5);
+      e.target.value = val;
+      if (val.length === 0) {
+        previewCode.innerText = 'Kspo@•••••#';
+      } else {
+        const masked = val + '•'.repeat(Math.max(0, 5 - val.length));
+        previewCode.innerText = `Kspo@${masked}#`;
+      }
+    });
+
     function showToast(text) {
-      const toast = document.getElementById('toast');
       toast.innerText = text;
       toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 2000);
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2000);
     }
 
-    async function executeLogin() {
-      const pin = document.getElementById('pinInput').value.trim();
+    async function copyToClipboard(text) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        return navigator.clipboard.writeText(text);
+      } else {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed";
+        textArea.style.opacity = "0";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        return Promise.resolve();
+      }
+    }
+
+    async function handleLoginFlow() {
+      const pin = pinInput.value.trim();
       if (pin.length !== 5 || !/^\d{5}$/.test(pin)) {
         alert('請輸入完整的 5 位阿拉伯數字');
+        pinInput.focus();
         return;
       }
 
       const fullPassword = `Kspo@${pin}#`;
-      const selectedUrl = document.querySelector('input[name="targetUrl"]:checked').value;
+      const selectedUrl = document.querySelector('input[name="targetHost"]:checked').value;
 
       try {
-        await navigator.clipboard.writeText(fullPassword);
+        await copyToClipboard(fullPassword);
         showToast('密碼已複製！即將跳轉...');
       } catch (err) {
-        prompt('剪貼簿自動寫入失敗，請手動複製密碼：', fullPassword);
+        prompt('請長按手動複製此密碼：', fullPassword);
       }
 
       setTimeout(() => {
         window.location.href = selectedUrl;
-      }, 500);
+      }, 400);
     }
 
-    async function copyAccount() {
+    async function copyAccountOnly() {
       try {
-        await navigator.clipboard.writeText('kksp');
+        await copyToClipboard('kksp');
         showToast('帳號 kksp 已複製');
       } catch (e) {
-        alert('複製失敗，請手動輸入');
+        alert('複製失敗，請手動輸入帳號 kksp');
       }
+    }
+
+    // 註冊 Service Worker (PWA 標準配置)
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(err => {
+          console.log('SW registration failed:', err);
+        });
+      });
     }
   </script>
 </body>
