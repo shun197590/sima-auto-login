@@ -48,49 +48,44 @@
   <div class="card">
     <div class="header">
       <h1>產業園區安全防護系統</h1>
-      <p>免輸入．一鍵複製密碼跳轉啟動器</p>
-      <div class="status-badge">固定完整密碼模式</div>
+      <p>一鍵複製密碼並自動前往登入頁</p>
+      <div class="status-badge">全自動．無需輸入密碼</div>
     </div>
 
     <div class="cred-box">
       <div class="cred-row">
-        <span class="cred-label">預設帳號</span>
+        <span class="cred-label">帳號</span>
         <span class="cred-val">kksp</span>
       </div>
       <div class="cred-row">
-        <span class="cred-label">預設密碼</span>
-        <span class="cred-val" id="pwdDisplay">Kspo@#####</span>
+        <span class="cred-label">已綁定密碼</span>
+        <span class="cred-val">Kspo@151766#</span>
       </div>
     </div>
 
     <div class="btn-group">
       <button class="btn btn-primary" onclick="launchSystem('https://security.bip.gov.tw/sima/')">
-        一鍵複製密碼並前往【正式系統】
+        一鍵前往【正式系統】
       </button>
       <button class="btn btn-outline" onclick="launchSystem('https://bipsimabackup.eric.org.tw/')">
-        一鍵複製密碼並前往【備援系統】
+        一鍵前往【備援系統】
       </button>
     </div>
 
     <div class="tip-box">
-      <strong>使用說明：</strong>
+      <strong>操作提示：</strong>
       <ol style="margin-top: 4px; padding-left: 18px;">
-        <li>若需修改密碼，可在本檔第 77 行 <code>DEFAULT_PASSWORD</code> 直接填入您自訂的完整密碼。</li>
-        <li>點擊按鈕會自動拷貝完整密碼至剪貼簿，並開啟對應系統。</li>
-        <li>登入頁直接貼上密碼、看圖輸入驗證碼即可。</li>
+        <li>點擊按鈕會自動將完整密碼寫入剪貼簿，並立即開啟系統頁面。</li>
+        <li>跳轉至登入頁後：帳號欄輸入 <code>kksp</code>，密碼欄直接「貼上」。</li>
+        <li>輸入圖形驗證碼即可完成登入。</li>
       </ol>
     </div>
   </div>
 
-  <div id="toast" class="toast">密碼已複製！前往中...</div>
+  <div id="toast" class="toast">密碼已複製！即將前往...</div>
 
   <script>
-    // ==========================================
-    // 這裡可直接填寫您的完整固定密碼（例如 "Kspo@12345#"）
-    // ==========================================
     const DEFAULT_PASSWORD = "Kspo@151766#";
-
-    document.getElementById('pwdDisplay').innerText = DEFAULT_PASSWORD;
 
     function showToast(text) {
       const t = document.getElementById('toast');
@@ -125,7 +120,7 @@
       }
       setTimeout(() => {
         window.location.href = url;
-      }, 400);
+      }, 350);
     }
 
     if ('serviceWorker' in navigator) {

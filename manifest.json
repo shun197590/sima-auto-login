@@ -1,7 +1,7 @@
 {
   "name": "安防一鍵登入",
   "short_name": "安防一鍵",
-  "description": "產業園區安全防護系統固定密碼快速啟動器",
+  "description": "產業園區安全防護系統快速登入啟動器",
   "start_url": "./index.html",
   "display": "standalone",
   "orientation": "portrait",
